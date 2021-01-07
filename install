@@ -1,13 +1,13 @@
 #!/bin/bash
 
 curr_dir=$(pwd)
-pass=''
-user=$(whoami)
+
+# install packages
 
 i=0
 for pac in base-devel pulseaudio pulseaudio-alsa xorg xorg-server xorg-xinit xdg-utils i3-wm dmenu rofi sudo i3blocks alacritty xterm lxappearance firefox noto-fonts-emoji flameshot
 do
-  pacman --noconfirm --needed -S $pac
+  pacman --noconfirm --needed -S $pac > /dev/null
   echo XXX
   i=$((i + 6))
   echo $i
