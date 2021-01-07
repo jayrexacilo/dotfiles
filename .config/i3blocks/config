@@ -10,17 +10,23 @@
 separator=true
 separator_block_width=15
 
-[documentation]
-full_text=Documentation
-website=https://vivien.github.io/i3blocks
-command=xdg-open "$website"
-color=#f12711
+[cpu]
+command=grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print "🖥"substr(usage, 1,2) "%"}'
+interval=10
 
-[greetings]
-color=#f5af19
-command=echo "Hello, $USER!"
+[memory]
+command=free -h | awk '/Mem/ {print "💾 "substr($7, 1, length($7)-1)}'
+interval=10
+
+[uptime]
+command=uptime | awk '{print "👨‍💻 " substr($3, 1, length($3)-1) }'
+interval=60
+
+[volume]
+command=sh ~/.local/bin/volume
 interval=once
+signal=2
 
 [time]
-command=date '+%Y-%m-%d %H:%M:%S'
+command=date '+%Y %a %b-%d %I:%M:%S'
 interval=1

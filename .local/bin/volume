@@ -1,0 +1,18 @@
+#!/bin/bash
+
+IS_MUTED=$(pacmd list-sinks | awk '/muted/ {print $2}')
+VOLUME=$(pacmd list-sinks | awk '/volume: front/ {print substr($5, 1, length($5)-1)}')
+MUTED="🔇"
+HIGH_VOLUME="🔊"
+MED_VOLUME="🔉"
+LOW_VOLUME="🔈"
+OUTPUT=$MUTED
+
+if [ "$IS_MUTED" = "no" ]; then
+    if [ $VOLUME -lt 25 ]; then OUTPUT="${LOW_VOLUME}${VOLUME}"; fi
+    if [[ $VOLUME -gt 25 && $VOLUME -lt 70 ]]; then OUTPUT="${MED_VOLUME}${VOLUME}"; fi
+    if [ $VOLUME -gt 70 ]; then OUTPUT="${HIGH_VOLUME}${VOLUME}"; fi
+    if [ $VOLUME -eq 0 ]; then OUTPUT="${MUTED}${VOLUME}"; fi
+fi
+
+echo $OUTPUT
