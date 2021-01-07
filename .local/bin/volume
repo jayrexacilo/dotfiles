@@ -9,9 +9,9 @@ LOW_VOLUME="🔈"
 OUTPUT=$MUTED
 
 if [ "$IS_MUTED" = "no" ]; then
-    if [ $VOLUME -lt 25 ]; then OUTPUT="${LOW_VOLUME}${VOLUME}"; fi
+    if [ $VOLUME -le 25 ]; then OUTPUT="${LOW_VOLUME}${VOLUME}"; fi
     if [[ $VOLUME -gt 25 && $VOLUME -lt 70 ]]; then OUTPUT="${MED_VOLUME}${VOLUME}"; fi
-    if [ $VOLUME -gt 70 ]; then OUTPUT="${HIGH_VOLUME}${VOLUME}"; fi
+    if [ $VOLUME -ge 70 ]; then OUTPUT="${HIGH_VOLUME}${VOLUME}"; fi
     if [ $VOLUME -eq 0 ]; then OUTPUT="${MUTED}${VOLUME}"; fi
 fi
 
