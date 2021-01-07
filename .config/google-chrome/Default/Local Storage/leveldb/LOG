@@ -1,0 +1,18 @@
+2021/01/07-09:58:49.531 3 Reusing MANIFEST /home/kzn/.config/google-chrome/Default/Local Storage/leveldb/MANIFEST-000001
+2021/01/07-09:58:49.535 3 Recovering log #10
+2021/01/07-09:58:49.538 3 Reusing old log /home/kzn/.config/google-chrome/Default/Local Storage/leveldb/000010.log 
+2021/01/07-10:02:03.827 7 Level-0 table #14: started
+2021/01/07-10:02:03.842 7 Level-0 table #14: 88004 bytes OK
+2021/01/07-10:02:03.848 7 Delete type=0 #10
+2021/01/07-10:03:31.734 a Level-0 table #16: started
+2021/01/07-10:03:31.753 a Level-0 table #16: 80977 bytes OK
+2021/01/07-10:03:31.765 a Delete type=0 #13
+2021/01/07-10:03:31.766 7 Compacting 4@0 + 1@1 files
+2021/01/07-10:03:31.812 7 Generated table #17@0: 83 keys, 831074 bytes
+2021/01/07-10:03:31.813 7 Compacted 4@0 + 1@1 files => 831074 bytes
+2021/01/07-10:03:31.822 7 compacted to: files[ 0 1 1 0 0 0 0 ]
+2021/01/07-10:03:31.824 7 Delete type=2 #14
+2021/01/07-10:03:31.824 7 Delete type=2 #16
+2021/01/07-10:03:31.824 7 Delete type=2 #9
+2021/01/07-10:03:31.824 7 Delete type=2 #11
+2021/01/07-10:03:31.824 7 Delete type=2 #7
