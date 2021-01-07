@@ -10,8 +10,13 @@
 separator=true
 separator_block_width=15
 
+[weather]
+command=curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo
+interval=3600
+color=#A4C2F4
+
 [cpu]
-command=grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print "🖥"substr(usage, 1,2) "%"}'
+command=grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print "📟"substr(usage, 1,2) "%"}'
 interval=10
 
 [memory]
@@ -21,6 +26,11 @@ interval=10
 [uptime]
 command=uptime | awk '{print "👨‍💻 " substr($3, 1, length($3)-1) }'
 interval=60
+
+[battery]
+command=sh ~/.local/bin/battery
+interval=once
+signal=3
 
 [volume]
 command=sh ~/.local/bin/volume

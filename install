@@ -5,7 +5,7 @@ curr_dir=$(pwd)
 # install packages
 
 i=0
-for pac in base-devel pulseaudio pulseaudio-alsa xorg xorg-server xorg-xinit xdg-utils i3-wm dmenu rofi sudo i3blocks alacritty xterm lxappearance firefox noto-fonts-emoji flameshot
+for pac in base-devel pulseaudio pulseaudio-alsa xorg xorg-server xorg-xinit xdg-utils i3-wm dmenu rofi sudo i3blocks alacritty xterm lxappearance firefox noto-fonts-emoji flameshot acpi
 do
  pacman --noconfirm --needed -S $pac > /dev/null
  echo XXX
@@ -17,6 +17,7 @@ done | whiptail --gauge "Installing..." 6 50 0
 
 #remove config files
 rm -fr ~/.config
+rm -fr ~/.local
 rm -fr ~/.vim
 rm -fr ~/.themes
 rm -f ~/.bash_profile
@@ -26,6 +27,7 @@ rm -f ~/.xinitrc
 
 #copy all configs
 cp -frs $curr_dir/.config ~/.config
+cp -frs $curr_dir/.local ~/.local
 cp -frs $curr_dir/.vim ~/.vim
 cp -frs $curr_dir/.themes ~/.themes
 cp -fs $curr_dir/.bash_profile ~/.bash_profile
