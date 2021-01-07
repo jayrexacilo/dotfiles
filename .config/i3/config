@@ -196,7 +196,7 @@ client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
 client.background       #F8F8F2
 
 bar {
-  status_command i3status
+  status_command i3blocks
   position top
   colors {
     background #282A36
