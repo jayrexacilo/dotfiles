@@ -15,11 +15,19 @@ do
  echo XXX
 done | whiptail --gauge "Installing..." 6 50 0
 
-#copy all configs
+#remove config files
+rm -fr ~/.config
+rm -fr ~/.vim
+rm -fr ~/.themes
+rm -f ~/.bash_profile
+rm -f ~/.bashrc
+rm -f ~/.vimrc
+rm -f ~/.xinitrc
 
-cp -fRs $curr_dir/.config ~/.config
-cp -fRs $curr_dir/.vim ~/.vim
-cp -fRs $curr_dir/.themes ~/.themes
+#copy all configs
+cp -frs $curr_dir/.config ~/.config
+cp -frs $curr_dir/.vim ~/.vim
+cp -frs $curr_dir/.themes ~/.themes
 cp -fs $curr_dir/.bash_profile ~/.bash_profile
 cp -fs $curr_dir/.bashrc ~/.bashrc
 cp -fs $curr_dir/.vimrc ~/.vimrc
