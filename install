@@ -1,0 +1,30 @@
+#!/bin/bash
+
+curr_dir=$(pwd)
+pass=''
+user=$(whoami)
+
+if [ $user = 'root' ];
+then
+  echo 'Exited'
+else
+  pass=$(whiptail --passwordbox "please enter your root password" 8 78 --title "password dialog" 3>&1 1>&2 2>&3)
+  i=0
+  for pac in pulseaudio pulseaudio-alsa xorg xorg-server xorg-xinit xdg-utils i3-wm dmenu rofi sudo i3blocks alacritty xterm lxappearance base-devel
+  do
+   sudo -S pacman --noconfirm --needed -S $pac <<< $pass
+   echo XXX
+   i=$((i + 6))
+   echo $i
+   echo "Installing... $pac"
+   echo XXX
+  done | whiptail --gauge "Installing..." 6 50 0
+fi
+
+cp -R $curr_dir/.config ~/.config
+cp -R $curr_dir/.vim ~/.vim
+cp -R $curr_dir/.themes ~/.themes
+cp $curr_dir/.bash_profile ~/.bash_profile
+cp $curr_dir/.bashrc ~/.bashrc
+cp $curr_dir/.vimrc ~/.vimrc
+cp $curr_dir/.xinitrc ~/.xinitrc
