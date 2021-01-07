@@ -7,30 +7,20 @@ curr_dir=$(pwd)
 i=0
 for pac in base-devel pulseaudio pulseaudio-alsa xorg xorg-server xorg-xinit xdg-utils i3-wm dmenu rofi sudo i3blocks alacritty xterm lxappearance firefox noto-fonts-emoji flameshot
 do
-  pacman --noconfirm --needed -S $pac > /dev/null
-  echo XXX
-  i=$((i + 6))
-  echo $i
-  echo "Installing... $pac"
-  echo XXX
+ pacman --noconfirm --needed -S $pac > /dev/null
+ echo XXX
+ i=$((i + 6))
+ echo $i
+ echo "Installing... $pac"
+ echo XXX
 done | whiptail --gauge "Installing..." 6 50 0
 
 #copy all configs
 
-cp -R $curr_dir/.config ~/.config
-cp -R $curr_dir/.vim ~/.vim
-cp -R $curr_dir/.themes ~/.themes
-cp $curr_dir/.bash_profile ~/.bash_profile
-cp $curr_dir/.bashrc ~/.bashrc
-cp $curr_dir/.vimrc ~/.vimrc
-cp $curr_dir/.xinitrc ~/.xinitrc
-
-#symlink
-
-ln -sf $curr_dir/.config ~/.config
-ln -sf $curr_dir/.vim ~/.vim
-ln -sf $curr_dir/.themes ~/.themes
-ln -sf $curr_dir/.bash_profile ~/.bash_profile
-ln -sf $curr_dir/.bashrc ~/.bashrc
-ln -sf $curr_dir/.vimrc ~/.vimrc
-ln -sf $curr_dir/.xinitrc ~/.xinitrc
+cp -fRs $curr_dir/.config ~/.config
+cp -fRs $curr_dir/.vim ~/.vim
+cp -fRs $curr_dir/.themes ~/.themes
+cp -fs $curr_dir/.bash_profile ~/.bash_profile
+cp -fs $curr_dir/.bashrc ~/.bashrc
+cp -fs $curr_dir/.vimrc ~/.vimrc
+cp -fs $curr_dir/.xinitrc ~/.xinitrc
