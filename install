@@ -16,6 +16,7 @@ do
 done | whiptail --gauge "Installing..." 6 50 0
 
 #remove config files
+rm -fr ~/.bg-wallpapers
 rm -fr ~/.config
 rm -fr ~/.local
 rm -fr ~/.vim
@@ -26,6 +27,7 @@ rm -f ~/.vimrc
 rm -f ~/.xinitrc
 
 #copy all configs
+cp -fr $curr_dir/.bg-wallpapers ~/.bg-wallpapers
 cp -frs $curr_dir/.config ~/.config
 cp -frs $curr_dir/.local ~/.local
 cp -frs $curr_dir/.vim ~/.vim
