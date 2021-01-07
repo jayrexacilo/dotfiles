@@ -44,3 +44,7 @@ signal=2
 [time]
 command=date '+%Y %a %b-%d %I:%M:%S'
 interval=1
+
+[internet]
+command=sh ~/.local/bin/sb-internet
+interval=60
