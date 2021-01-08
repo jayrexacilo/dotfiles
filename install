@@ -52,9 +52,9 @@ whiptail --title "What to do?" --checklist --separate-output "Please select" 10 
 while read choice
 do
   case $choice in
-    INSTALL_PACKAGES) echo "install_pac"
+    INSTALL_PACKAGES) install_pac
     ;;
-    RECONFIGURE_FILES) echo "reconfig_files"
+    RECONFIGURE_FILES) reconfig_files
     ;;
     *)
     ;;
