@@ -15,6 +15,8 @@ function install_pac {
    echo "Installing... $pac"
    echo XXX
   done | whiptail --gauge "Installing..." 6 50 0
+
+  echo "Installed default packages!"
 }
 
 function reconfig_files {
@@ -41,6 +43,8 @@ function reconfig_files {
   cp -fs $curr_dir/.xinitrc ~/.xinitrc
 
   mkdir ~/.local/share
+
+  echo "Reconfigure success!"
 }
 
 whiptail --title "What to do?" --checklist --separate-output "Please select" 10 65 3 "INSTALL_PACKAGES" "It will install default packages" ON "RECONFIGURE_FILES" "Set the default configs" OFF 2>results
@@ -48,11 +52,13 @@ whiptail --title "What to do?" --checklist --separate-output "Please select" 10 
 while read choice
 do
   case $choice in
-    INSTALL_PACKAGES) install_pac
+    INSTALL_PACKAGES) echo "install_pac"
     ;;
-    RECONFIGURE_FILES) reconfig_files
+    RECONFIGURE_FILES) echo "reconfig_files"
     ;;
     *)
     ;;
   esac
 done < results
+
+rm $curr_dir/results
