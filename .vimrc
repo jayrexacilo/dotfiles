@@ -6,7 +6,13 @@ Plug 'mattn/emmet-vim'
 Plug 'cormacrelf/vim-colors-github'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
+
+let g:ctrlp_map = '<c-f>'
+let g:ctrlp_cmd = 'CtrlP'
+set runtimepath^=~/.vim/plugged/ctrlp.vim
 
 set t_Co=256 
 set hlsearch 
