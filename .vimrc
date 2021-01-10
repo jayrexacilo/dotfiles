@@ -2,9 +2,29 @@ set directory^=$HOME/.vim/tmp/
 
 
 call plug#begin('~/.vim/plugged')
-Plug 'sheerun/vim-polyglot'
-Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
+Plug 'mattn/emmet-vim'
+Plug 'cormacrelf/vim-colors-github'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 call plug#end()
+
+set t_Co=256 
+set hlsearch 
+
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+" use a slightly darker background, like GitHub inline code blocks
+let g:github_colors_soft = 1
+
+" use the dark theme
+set background=dark
+
+" more blocky diff markers in signcolumn (e.g. GitGutter)
+let g:github_colors_block_diffmark = 0
+colorscheme github
 
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -40,28 +60,7 @@ xnoremap cj c/**/<Esc>hhp
 xnoremap chh :s/^<!--//g\|'<,'>s/-->$//g
 xnoremap cjj :s/^\/\*//g\|'<,'>s/\*\/$//g
 
-
 let @t .= 'tabe | find '
-
-
-"set termguicolors 
- 
-" for dark version 
-"colors meh
-set t_Co=256 
-"set background=dark 
-"colorscheme meh
-set hlsearch 
-
-
-if has('termguicolors')
- set termguicolors
-endif
-"let g:sonokai_style = 'atlantis'
-"let g:sonokai_enable_italic = 1
-"let g:sonokai_disable_italic_comment = 1
-"colors sonokai
-"colorscheme sonokai
 
 " enter the current millenium 
 set nocompatible 
