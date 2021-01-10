@@ -1,5 +1,7 @@
 set directory^=$HOME/.vim/tmp/
 
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
 set autoread
 set autoindent
 set nowrap 
@@ -30,31 +32,32 @@ xnoremap cjj :s/^\/\*//g\|'<,'>s/\*\/$//g
 
 
 let @t .= 'tabe | find '
+
+
 "set termguicolors 
  
 " for dark version 
 "colors meh
-set t_Co=256 
+"set t_Co=256 
 "set background=dark 
 "colorscheme meh
 set hlsearch 
 
-if has('termguicolors')
-  set termguicolors
-endif
-let g:sonokai_style = 'atlantis'
-let g:sonokai_enable_italic = 1
-let g:sonokai_disable_italic_comment = 1
-colors sonokai
-colorscheme sonokai
+"if has('termguicolors')
+" set termguicolors
+"endif
+"let g:sonokai_style = 'atlantis'
+"let g:sonokai_enable_italic = 1
+"let g:sonokai_disable_italic_comment = 1
+"colors sonokai
+"colorscheme sonokai
 
 " enter the current millenium 
 set nocompatible 
  
 " enable syntax and plugins (for netrw) 
-"syntax enable 
+syntax enable 
 filetype plugin on 
- 
 set number relativenumber 
  
 " FINDING FILES: 
