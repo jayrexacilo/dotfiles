@@ -23,6 +23,10 @@ command=sh ~/.local/bin/weather
 interval=3600
 color=#A4C2F4
 
+[cpu_temp]
+command=sensors | awk '/temp1/ {print "🌡 " substr($2, 2, length($2))}'
+interval=10
+
 [cpu]
 command=grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print "📟"substr(usage, 1,2) "%"}'
 interval=10
