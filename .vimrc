@@ -1,7 +1,17 @@
 set directory^=$HOME/.vim/tmp/
 
-set runtimepath^=~/.vim/bundle/ctrlp.vim
 
+call plug#begin('~/.vim/plugged')
+Plug 'sheerun/vim-polyglot'
+Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
+call plug#end()
+
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ctrlp_map = '<c-f>'
+let g:ctrlp_cmd = 'CtrlP'
+
+set laststatus=2
 set autoread
 set autoindent
 set nowrap 
@@ -9,7 +19,7 @@ set mouse=a
  
 set cursorcolumn 
 set cursorline 
-set ignorecase
+"set ignorecase
 set smartcase
 
 " remap
@@ -38,14 +48,15 @@ let @t .= 'tabe | find '
  
 " for dark version 
 "colors meh
-"set t_Co=256 
+set t_Co=256 
 "set background=dark 
 "colorscheme meh
 set hlsearch 
 
-"if has('termguicolors')
-" set termguicolors
-"endif
+
+if has('termguicolors')
+ set termguicolors
+endif
 "let g:sonokai_style = 'atlantis'
 "let g:sonokai_enable_italic = 1
 "let g:sonokai_disable_italic_comment = 1
@@ -59,6 +70,7 @@ set nocompatible
 syntax enable 
 filetype plugin on 
 set number relativenumber 
+
  
 " FINDING FILES: 
  
