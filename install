@@ -33,6 +33,7 @@ function reconfig_files {
   rm -f ~/.bashrc
   rm -f ~/.vimrc
   rm -f ~/.xinitrc
+  rm -f ~/.tmux.conf
 
   #copy all configs
   cp -fr $curr_dir/.bg-wallpapers ~/.bg-wallpapers
