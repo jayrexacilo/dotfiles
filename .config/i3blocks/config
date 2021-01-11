@@ -7,12 +7,17 @@
 
 
 # Global properties
-separator=true
+separator=false
 separator_block_width=15
 
 #[bandwidth]
 #command=sh ~/.local/bin/bandwidth
 #interval=2
+
+[mediaplayer]
+command=playerctl metadata title
+label=🎵 
+interval=5
 
 [nettraf]
 command=sh ~/.local/bin/sb-nettraf

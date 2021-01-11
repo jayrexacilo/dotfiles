@@ -8,7 +8,7 @@ function install_pac {
   i=0
   input=$(whiptail --passwordbox "Enter password" 10 30 3>&1 1>&2 2>&3)
 
-  for pac in base-devel pulseaudio pulseaudio-alsa xorg xorg-server xorg-xinit xdg-utils xorg-xprop xorg-xset xorg-xbacklight i3-wm dmenu rofi sudo i3blocks alacritty lxappearance firefox noto-fonts-emoji flameshot acpi wget bc i3lock imagemagick picom ranger sxiv xwallpaper gvim mpv mpd mpc fzf unzip unrar xclip tmux fish
+  for pac in base-devel pulseaudio pulseaudio-alsa xorg xorg-server xorg-xinit xdg-utils xorg-xprop xorg-xset xorg-xbacklight i3-wm dmenu rofi sudo i3blocks alacritty lxappearance firefox noto-fonts-emoji flameshot acpi wget bc i3lock imagemagick picom ranger sxiv xwallpaper gvim mpv mpd mpc playerctl fzf unzip unrar xclip tmux fish
   do
    echo $input | sudo -S pacman --noconfirm --needed -S $pac > /dev/null 2>&1
    echo XXX
