@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+icon=$(playerctl status | awk '{print $0 == "Paused" ? "⏸️" : "🎵"}')
+title=$(playerctl metadata title)
+
+echo $icon $title

@@ -14,14 +14,13 @@ separator_block_width=15
 #command=sh ~/.local/bin/bandwidth
 #interval=2
 
-[mediaplayer]
-command=playerctl metadata title
-label=🎵 
-interval=5
-
 [nettraf]
 command=sh ~/.local/bin/sb-nettraf
 interval=2
+
+[mediaplayer]
+command=sh ~/.local/bin/mediaplayer
+interval=3
 
 [weather]
 command=sh ~/.local/bin/weather
