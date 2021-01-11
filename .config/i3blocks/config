@@ -44,6 +44,13 @@ command=sh ~/.local/bin/battery
 interval=once
 signal=3
 
+[backlight]
+command=sh ~/.local/bin/backlight
+label=☀
+interval=20
+#STEP_SIZE=5
+#USE_SUDO=0
+
 [volume]
 command=sh ~/.local/bin/volume
 interval=once
