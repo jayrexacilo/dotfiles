@@ -43,6 +43,10 @@ bindsym $mod+Shift+minus exec --no-startup-id pactl set-sink-volume @DEFAULT_SIN
 bindsym $mod+Shift+BackSpace exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3blocks
 bindsym $mod+Shift+m exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3blocks
 
+bindsym $mod+F1 exec --no-startup-id playerctl --player=youtube-music-desktop-app play-pause
+bindsym $mod+F2 exec --no-startup-id playerctl --player=youtube-music-desktop-app next
+bindsym $mod+F3 exec --no-startup-id playerctl --player=youtube-music-desktop-app previous
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -114,10 +118,10 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
@@ -215,6 +219,7 @@ set $comment #6272a4
 set $purple  #bd93f9
 
 bar {
+  strip_workspace_numbers yes
   status_command i3blocks
   position top
   font pango: SpaceMono Nerd Font Regular 9
@@ -245,10 +250,10 @@ set $i3_resurrect i3-resurrect
 
 # Save workspace mode.
 mode "save" {
-  bindsym 1 exec $i3_resurrect save -w 1
-  bindsym 2 exec $i3_resurrect save -w 2
-  bindsym 3 exec $i3_resurrect save -w 3
-  bindsym 4 exec $i3_resurrect save -w 4
+  bindsym 1 exec $i3_resurrect save -w "1:"
+  bindsym 2 exec $i3_resurrect save -w "2:"
+  bindsym 3 exec $i3_resurrect save -w "3:"
+  bindsym 4 exec $i3_resurrect save -w "4:"
   bindsym 5 exec $i3_resurrect save -w 5
   bindsym 6 exec $i3_resurrect save -w 6
   bindsym 7 exec $i3_resurrect save -w 7
@@ -267,10 +272,10 @@ bindsym $mod+s mode "save"
 
 # Restore workspace mode.
 mode "restore" {
-  bindsym 1 exec $i3_resurrect restore -w 1
-  bindsym 2 exec $i3_resurrect restore -w 2
-  bindsym 3 exec $i3_resurrect restore -w 3
-  bindsym 4 exec $i3_resurrect restore -w 4
+  bindsym 1 exec $i3_resurrect restore -w "1:"
+  bindsym 2 exec $i3_resurrect restore -w "2:"
+  bindsym 3 exec $i3_resurrect restore -w "3:"
+  bindsym 4 exec $i3_resurrect restore -w "4:"
   bindsym 5 exec $i3_resurrect restore -w 5
   bindsym 6 exec $i3_resurrect restore -w 6
   bindsym 7 exec $i3_resurrect restore -w 7

@@ -1,7 +1,8 @@
 #!/bin/bash
 
 
-icon=$(playerctl status | awk '{print $0 == "Paused" ? "⏸️" : "🎵"}')
-title=$(playerctl metadata title)
+icon=$(playerctl --player=youtube-music-desktop-app status | awk '{print $0 == "Paused" ? "⏸️" : "🎵"}')
+title=$(playerctl --player=youtube-music-desktop-app metadata title)
+artist=$(playerctl --player=youtube-music-desktop-app metadata artist)
 
-echo $icon $title
+echo $icon $artist - $title

@@ -5,6 +5,7 @@ AUR_PACKAGES=(
     'zsh-theme-powerlevel9k'
     'nerd-fonts-source-code-pro'
     'oh-my-zsh-git'
+    'ytmdesktop-git'
   )
 
 function installOhMyZsh() {
