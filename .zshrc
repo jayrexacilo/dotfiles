@@ -125,5 +125,4 @@ plugins=(
     zsh-syntax-highlighting
 )
 
-echo $ZSH
 source $ZSH/oh-my-zsh.sh
