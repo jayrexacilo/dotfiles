@@ -1,6 +1,22 @@
 #!/bin/bash
 
 curr_dir=$(pwd)
+AUR_PACKAGES=(
+    'zsh-theme-powerlevel9k'
+    'nerd-fonts-source-code-pro'
+    'oh-my-zsh-git'
+  )
+
+function installOhMyZsh() {
+  sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+  git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+  git clone https://github.com/zsh-users/zsh-history-substring-search ~/.oh-my-zsh/custom/plugins/zsh-history-substring-search
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+  git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
+  cd ~/.oh-my-zsh/custom/themes/powerlevel9k
+  git checkout next
+}
 
 # install packages
 
@@ -8,7 +24,7 @@ function install_pac {
   i=0
   input=$(whiptail --passwordbox "Enter password" 10 30 3>&1 1>&2 2>&3)
 
-  for pac in base-devel pulseaudio pulseaudio-alsa xorg xorg-server xorg-xinit xdg-utils xorg-xprop xorg-xset xorg-xbacklight i3-wm i3-resurrect dmenu rofi sudo i3blocks alacritty lxappearance firefox noto-fonts-emoji flameshot acpi wget bc i3lock imagemagick picom ranger sxiv xwallpaper gvim mpv mpd mpc playerctl fzf unzip unrar xclip tmux fish
+  for pac in base-devel pulseaudio pulseaudio-alsa xorg xorg-server xorg-xinit xdg-utils xorg-xprop xorg-xset xorg-xbacklight i3-wm i3-resurrect dmenu rofi sudo i3blocks alacritty lxappearance firefox noto-fonts-emoji flameshot acpi wget bc i3lock imagemagick picom ranger sxiv xwallpaper gvim mpv mpd mpc playerctl fzf unzip unrar xclip tmux zsh
   do
    echo $input | sudo -S pacman --noconfirm --needed -S $pac > /dev/null 2>&1
    echo XXX
@@ -34,6 +50,9 @@ function reconfig_files {
   rm -f ~/.vimrc
   rm -f ~/.xinitrc
   rm -f ~/.tmux.conf
+  rm -f ~/.zprofile
+  rm -f ~/.zshenv
+  rm -f ~/.zshrc
 
   #copy all configs
   cp -fr $curr_dir/.bg-wallpapers ~/.bg-wallpapers
@@ -45,6 +64,9 @@ function reconfig_files {
   cp -fs $curr_dir/.bashrc ~/.bashrc
   cp -fs $curr_dir/.vimrc ~/.vimrc
   cp -fs $curr_dir/.xinitrc ~/.xinitrc
+  cp -fs $curr_dir/.zprofile ~/.zprofile
+  cp -fs $curr_dir/.zshenv ~/.zshenv
+  cp -fs $curr_dir/.zshrc ~/.zshrc
 
   mkdir ~/.local/share
 

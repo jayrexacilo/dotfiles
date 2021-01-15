@@ -21,7 +21,8 @@ exec --no-startup-id xwallpaper --stretch ~/.bg-wallpapers/robot-head.jpg
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Noto Sans Adlam 9
+#font pango:Noto Sans Adlam 9
+font pango: SpaceMono Nerd Font Mono Medium 10
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -203,20 +204,39 @@ client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
 
 client.background       #F8F8F2
 
+# Defining colors
+set $bg      #282A36
+set $lg      #44475a
+set $fg      #f8f8f2
+set $cyan    #8be9fd
+set $green   #50fa7b
+set $magenta #ff79c6
+set $comment #6272a4
+set $purple  #bd93f9
+
 bar {
   status_command i3blocks
   position top
+  font pango: SpaceMono Nerd Font Regular 9
   colors {
-    background #282A36
-    statusline #F8F8F2
-    separator  #44475A
-
-    focused_workspace  #44475A #44475A #F8F8F2
-    active_workspace   #282A36 #44475A #F8F8F2
-    inactive_workspace #282A36 #282A36 #BFBFBF
-    urgent_workspace   #FF5555 #FF5555 #F8F8F2
-    binding_mode       #FF5555 #FF5555 #F8F8F2
+      #                   Border Background Text
+      focused_workspace   $fg    $fg        $bg
+      active_workspace    $bg    $bg        $purple
+      inactive_workspace  $bg    $bg        $cyan
+      urgent_workspace    $bg    $bg        $magenta
+      background          $bg
   }
+  #colors {
+  # background #282A36
+  # statusline #F8F8F2
+  # separator  #44475A
+
+  # focused_workspace  #44475A #44475A #F8F8F2
+  # active_workspace   #282A36 #44475A #F8F8F2
+  # inactive_workspace #282A36 #282A36 #BFBFBF
+  # urgent_workspace   #FF5555 #FF5555 #F8F8F2
+  # binding_mode       #FF5555 #FF5555 #F8F8F2
+  #}
 }
 
 #bindsym $mod+d exec "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-10' -p 'dmenu%'"
