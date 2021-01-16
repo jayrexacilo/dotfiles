@@ -1,8 +1,15 @@
 #!/bin/bash
 
-
-icon=$(playerctl --player=youtube-music-desktop-app status | awk '{print $0 == "Paused" ? "⏸️" : "🎵"}')
+status=$(playerctl --player=youtube-music-desktop-app status)
 title=$(playerctl --player=youtube-music-desktop-app metadata title)
 artist=$(playerctl --player=youtube-music-desktop-app metadata artist)
 
-echo $icon $artist - $title
+if [ $status = "Paused" ];
+then
+ echo "⏸️" $artist - $title
+elif [ $status = "Playing" ];
+then
+ echo "🎵" $artist - $title
+else
+  echo ""
+fi
