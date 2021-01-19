@@ -8,7 +8,23 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'w0rp/ale'
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 call plug#end()
+
+" eslint config
+let g:ale_fixers = {
+ \ 'javascript': ['eslint']
+ \ }
+let b:ale_linters = ['eslint']
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
+let g:ale_fix_on_save = 1
+let g:syntastic_javascript_eslint_exe = 'npm run eslint --'
+
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_config_present = 1
+let g:prettier#autoformat_require_pragma = 0
 
 let g:ctrlp_map = '<c-f>'
 let g:ctrlp_cmd = 'CtrlP'
@@ -32,11 +48,6 @@ set background=dark
 let g:github_colors_block_diffmark = 0
 colorscheme github
 
-
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_map = '<c-f>'
-let g:ctrlp_cmd = 'CtrlP'
-
 set laststatus=2
 set autoread
 set autoindent
@@ -53,7 +64,7 @@ nnoremap , `
 imap kj <Esc>
 inoremap <Esc> <Esc>`^
 " remap for scripts
-inoremap { {}<Esc>i<CR><Esc>%<S-a><CR><tab>
+inoremap { {}<Esc>i
 inoremap [ []<Esc>i
 inoremap ( ()<Esc>i
 inoremap " ""<Esc>i
@@ -82,7 +93,8 @@ set number relativenumber
 " Search down into subfolders 
 " Provides tab-completion for all file-related tasks 
 set path+=** 
- 
+set wildignore+=**/node_modules/**
+
 " Display all matching files when we tab complete 
 set wildmenu 
  
