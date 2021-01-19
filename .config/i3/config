@@ -106,6 +106,8 @@ bindsym $mod+f fullscreen toggle
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+s move scratchpad
+bindsym $mod+Shift+d scratchpad show
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
