@@ -13,9 +13,7 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 call plug#end()
 
 " eslint config
-let g:ale_fixers = {
- \ 'javascript': ['eslint']
- \ }
+let b:ale_fixers = ['prettier', 'eslint']
 let b:ale_linters = ['eslint']
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
@@ -28,6 +26,8 @@ let g:prettier#autoformat_require_pragma = 0
 
 let g:ctrlp_map = '<c-f>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+let g:ctrlp_show_hidden = 1
 set runtimepath^=~/.vim/plugged/ctrlp.vim
 
 set t_Co=256 
@@ -60,7 +60,8 @@ set cursorline
 set smartcase
 
 " remap
-nnoremap , `
+"nnoremap , `
+let mapleader = ","
 imap kj <Esc>
 inoremap <Esc> <Esc>`^
 " remap for scripts
@@ -76,6 +77,9 @@ xnoremap ch c<!----><Esc>hhhp
 xnoremap cj c/**/<Esc>hhp
 xnoremap chh :s/^<!--//g\|'<,'>s/-->$//g
 xnoremap cjj :s/^\/\*//g\|'<,'>s/\*\/$//g
+
+nmap <silent> <leader>n :ALENext<cr>
+nmap <silent> <leader>p :ALEPrevious<cr>
 
 let @t .= 'tabe | find '
 
