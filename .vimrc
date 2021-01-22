@@ -62,6 +62,9 @@ set smartcase
 " remap
 "nnoremap , `
 let mapleader = ","
+nnoremap <silent> <leader>w :w<cr>
+nnoremap <silent> <leader>q :q<cr>
+nnoremap <silent> <leader>aq :qal<cr>
 imap kj <Esc>
 inoremap <Esc> <Esc>`^
 " remap for scripts
@@ -80,6 +83,12 @@ xnoremap cjj :s/^\/\*//g\|'<,'>s/\*\/$//g
 
 nmap <silent> <leader>n :ALENext<cr>
 nmap <silent> <leader>p :ALEPrevious<cr>
+
+
+nmap <silent> <leader>11 :so 1.vim<cr>
+nmap <silent> <leader>s1 :mks! 1.vim<cr>
+nmap <silent> <leader>22 :so 2.vim<cr>
+nmap <silent> <leader>s2 :mks! 2.vim<cr>
 
 let @t .= 'tabe | find '
 
