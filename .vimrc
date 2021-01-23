@@ -6,23 +6,19 @@ Plug 'mattn/emmet-vim'
 Plug 'cormacrelf/vim-colors-github'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 call plug#end()
 
 " eslint config
-let b:ale_fixers = ['prettier', 'eslint']
-let b:ale_linters = ['eslint']
+let g:ale_fixers = ['prettier', 'eslint']
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
-let g:ale_fix_on_save = 1
 let g:syntastic_javascript_eslint_exe = 'npm run eslint --'
-
-let g:prettier#autoformat = 1
-let g:prettier#autoformat_config_present = 1
-let g:prettier#autoformat_require_pragma = 0
+let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
+let g:ale_completion_autoimport = 1
 
 let g:ctrlp_map = '<c-f>'
 let g:ctrlp_cmd = 'CtrlP'
