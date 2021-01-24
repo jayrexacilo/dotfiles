@@ -4,7 +4,6 @@ set directory^=$HOME/.vim/tmp/
 call plug#begin('~/.vim/plugged')
 Plug 'mattn/emmet-vim'
 Plug 'cormacrelf/vim-colors-github'
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'dense-analysis/ale'
