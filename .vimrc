@@ -57,6 +57,22 @@ set smartcase
 " remap
 "nnoremap , `
 let mapleader = ","
+
+function GetSessionDir()
+  let g:session_dir = '~/.vim-sessions'
+  let g:proj_dir = split($PWD, '/')[-1]
+  if empty(glob(expand('~/.vim-sessions')))
+    exec 'silent !mkdir '.g:session_dir.' > /dev/null 2>&1'
+  endif
+  if empty(glob(expand('~/.vim-sessions/'.g:proj_dir)))
+    exec 'silent !mkdir '.g:session_dir.'/'.g:proj_dir.'> /dev/null 2>&1'
+  endif
+  return g:session_dir.'/'.g:proj_dir
+endfunction
+
+exec 'nnoremap <leader>ss :mks! '. GetSessionDir() .'/*.vim<C-D><BS><BS><BS><BS><BS>'
+exec 'nnoremap <leader>sr :so '. GetSessionDir() .'/*.vim<C-D><BS><BS><BS><BS><BS>'
+
 nnoremap <silent> <leader>w :w<cr>
 nnoremap <silent> <leader>q :q<cr>
 nnoremap <silent> <leader>aq :qal<cr>
@@ -78,12 +94,6 @@ xnoremap cjj :s/^\/\*//g\|'<,'>s/\*\/$//g
 
 nmap <silent> <leader>n :ALENext<cr>
 nmap <silent> <leader>p :ALEPrevious<cr>
-
-
-nmap <silent> <leader>11 :so 1.vim<cr>
-nmap <silent> <leader>s1 :mks! 1.vim<cr>
-nmap <silent> <leader>22 :so 2.vim<cr>
-nmap <silent> <leader>s2 :mks! 2.vim<cr>
 
 let @t .= 'tabe | find '
 
