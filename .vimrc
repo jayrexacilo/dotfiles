@@ -8,6 +8,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'dense-analysis/ale'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+Plug 'mkitt/tabline.vim'
 call plug#end()
 
 " eslint config
