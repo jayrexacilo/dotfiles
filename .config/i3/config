@@ -59,7 +59,8 @@ bindsym $mod+Shift+Return exec gtk-launch $(xdg-settings get default-web-browser
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-#bindsym $mod+d exec --no-startup-id dmenu_run
+#bindsym $mod+e exec --no-startup-id dmenu_run rofimoji
+bindsym $mod+e exec echo -e "rofimoji" | rofi -show run
 # A more modern dmenu replacement is rofi:
 bindsym $mod+d exec rofi -show drun -theme ~/.config/rofi/config.rasi -show-icons
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -124,7 +125,7 @@ set $ws1 "1:<span font='SpaceMono Nerd Font Regular 15'></span>"
 set $ws2 "2:<span font='SpaceMono Nerd Font Regular 19'></span>"
 set $ws3 "3:<span font='SpaceMono Nerd Font Regular 19'></span>"
 set $ws4 "4:<span font='SpaceMono Nerd Font Regular 14'></span>"
-set $ws5 "5"
+set $ws5 "5:<span font='SpaceMono Nerd Font Regular 19'></span>"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
