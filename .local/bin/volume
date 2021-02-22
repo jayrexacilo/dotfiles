@@ -1,14 +1,16 @@
 #!/bin/bash
 
-IS_MUTED=$(pacmd list-sinks | awk '/muted/ {print $2}')
-VOLUME=$(pacmd list-sinks | awk '/volume: front/ {print substr($5, 1, length($5)-1)}')
+#IS_MUTED=$(pacmd list-sinks | awk '/muted/ {print $2}')
+IS_MUTED=$(pulsemixer --get-mute)
+#VOLUME=$(pacmd list-sinks | awk '/volume: front/ {print substr($5, 1, length($5)-1)}')
+VOLUME=$(pulsemixer --get-volume | awk '{print $1}')
 MUTED="🔇"
 HIGH_VOLUME="🔊"
 MED_VOLUME="🔉"
 LOW_VOLUME="🔈"
 OUTPUT=$MUTED
 
-if [ "$IS_MUTED" = "no" ]; then
+if [ "$IS_MUTED" -eq 0 ]; then
     if [ $VOLUME -le 25 ]; then OUTPUT="${LOW_VOLUME}${VOLUME}"; fi
     if [[ $VOLUME -gt 25 && $VOLUME -lt 70 ]]; then OUTPUT="${MED_VOLUME}${VOLUME}"; fi
     if [ $VOLUME -ge 70 ]; then OUTPUT="${HIGH_VOLUME}${VOLUME}"; fi
