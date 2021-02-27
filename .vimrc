@@ -80,14 +80,14 @@ nnoremap <silent> <leader>aq :qal<cr>
 imap kj <Esc>
 inoremap <Esc> <Esc>`^
 " remap for scripts
-inoremap { {}<Esc>i
-inoremap [ []<Esc>i
-inoremap ( ()<Esc>i
-inoremap " ""<Esc>i
-inoremap ' ''<Esc>i
-inoremap ` ``<Esc>i
-imap if<tab> if(<Esc><S-a>{<Esc>mij%hi
-imap for<tab> for(<Esc><S-a>{<Esc>mij%hi
+"inoremap { {}<Esc>i
+"inoremap [ []<Esc>i
+"inoremap ( ()<Esc>i
+"inoremap " ""<Esc>i
+"inoremap ' ''<Esc>i
+"inoremap ` ``<Esc>i
+"imap if<tab> if(<Esc><S-a>{<Esc>mij%hi
+"imap for<tab> for(<Esc><S-a>{<Esc>mij%hi
 xnoremap ch c<!----><Esc>hhhp
 xnoremap cj c/**/<Esc>hhp
 xnoremap chh :s/^<!--//g\|'<,'>s/-->$//g
