@@ -6,3 +6,7 @@ alias cdxd='cd ~/programming/xplus/dipcwd'
 alias cdp='cd ~/programming/personal-projects'
 
 export TERM=xterm-256color
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/kzn/.sdkman"
+[[ -s "/home/kzn/.sdkman/bin/sdkman-init.sh" ]] && source "/home/kzn/.sdkman/bin/sdkman-init.sh"
