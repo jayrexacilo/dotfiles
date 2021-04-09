@@ -1,24 +1,51 @@
+"reference: https://thoughtbot.com/blog/modern-typescript-and-react-development-in-vim#highlighting-for-large-files
 set directory^=$HOME/.vim/tmp/
-
 
 call plug#begin('~/.vim/plugged')
 Plug 'mattn/emmet-vim'
 Plug 'cormacrelf/vim-colors-github'
 Plug 'tpope/vim-fugitive'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'dense-analysis/ale'
-Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+"Plug 'dense-analysis/ale'
+"Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'mkitt/tabline.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'jparise/vim-graphql'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
+let g:coc_global_extensions = [
+  \ 'coc-tsserver'
+  \ ]
+
+function! ShowDocIfNoDiagnostic(timer_id)
+  if (coc#util#has_float() == 0)
+    silent call CocActionAsync('doHover')
+  endif
+endfunction
+
+function! s:show_hover_doc()
+  call timer_start(500, 'ShowDocIfNoDiagnostic')
+endfunction
+
+autocmd CursorHoldI * :call <SID>show_hover_doc()
+autocmd CursorHold * :call <SID>show_hover_doc()
+
 " eslint config
-let g:ale_fixers = ['prettier', 'eslint']
-let g:ale_sign_error = '❌'
-let g:ale_sign_warning = '⚠️'
-let g:syntastic_javascript_eslint_exe = 'npm run eslint --'
-let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
-let g:ale_completion_autoimport = 1
+"let g:ale_fixers = ['prettier', 'eslint']
+"let g:ale_sign_error = '❌'
+"let g:ale_sign_warning = '⚠️'
+"let g:syntastic_javascript_eslint_exe = 'npm run eslint --'
+"let g:ale_fix_on_save = 1
+"let g:ale_completion_enabled = 1
+"let g:ale_completion_autoimport = 1
+
+"Highlighting for large files
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
 let g:ctrlp_map = '<c-f>'
 let g:ctrlp_cmd = 'CtrlP'
