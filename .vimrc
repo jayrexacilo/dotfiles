@@ -21,18 +21,20 @@ let g:coc_global_extensions = [
   \ 'coc-tsserver'
   \ ]
 
-function! ShowDocIfNoDiagnostic(timer_id)
-  if (coc#util#has_float() == 0)
-    silent call CocActionAsync('doHover')
-  endif
-endfunction
+"function! ShowDocIfNoDiagnostic(timer_id)
+" if (coc#util#has_float() == 0)
+"   silent call CocActionAsync('doHover')
+" endif
+"endfunction
+"
+"function! s:show_hover_doc()
+" call timer_start(500, 'ShowDocIfNoDiagnostic')
+"endfunction
+"
+"autocmd CursorHoldI * :call <SID>show_hover_doc()
+"autocmd CursorHold * :call <SID>show_hover_doc()
 
-function! s:show_hover_doc()
-  call timer_start(500, 'ShowDocIfNoDiagnostic')
-endfunction
-
-autocmd CursorHoldI * :call <SID>show_hover_doc()
-autocmd CursorHold * :call <SID>show_hover_doc()
+nnoremap <silent> K :call CocAction('doHover')<CR>
 
 " eslint config
 "let g:ale_fixers = ['prettier', 'eslint']
