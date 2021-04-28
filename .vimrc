@@ -21,6 +21,11 @@ let g:coc_global_extensions = [
   \ 'coc-tsserver'
   \ ]
 
+try
+    nmap <silent> [c :call CocAction('diagnosticNext')<cr>
+    nmap <silent> ]c :call CocAction('diagnosticPrevious')<cr>
+endtry
+
 "function! ShowDocIfNoDiagnostic(timer_id)
 " if (coc#util#has_float() == 0)
 "   silent call CocActionAsync('doHover')
@@ -78,6 +83,10 @@ set autoread
 set autoindent
 set nowrap 
 set mouse=a 
+
+filetype plugin indent on
+set smartindent
+autocmd BufRead,BufWritePre *.sh normal gg=G
  
 set cursorcolumn 
 set cursorline 
