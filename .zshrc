@@ -8,6 +8,7 @@ alias cdm='cd /mnt/storage2/movies && ranger'
 alias cdx='cd ~/programming/xplus/'
 alias cdxd='cd ~/programming/xplus/dipcwd'
 alias cdp='cd ~/programming/personal-projects'
+alias nv='nvim'
 
 export TERM=xterm-256color
 

@@ -18,6 +18,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mcchrish/nnn.vim'
 call plug#end()
 
+
 let g:coc_global_extensions = [
   \ 'coc-tsserver'
   \ ]

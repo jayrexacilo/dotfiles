@@ -10,6 +10,7 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $alt Mod1
 
 exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
 exec --no-startup-id xdg-settings set default-web-browser google-chrome.desktop
@@ -66,7 +67,8 @@ bindsym $mod+e exec rofimoji --action clipboard
 bindsym $mod+d exec rofi -show drun -theme ~/.config/rofi/config.rasi -show-icons
 # There also is i3-dmenu-desktop which only displays applications shipping a
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
-#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+#bindsym $alt+d exec --no-startup-id i3-dmenu-desktop
+bindsym $alt+d exec "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-10' -p 'dmenu%'"
 
 # change focus
 bindsym $mod+h focus left

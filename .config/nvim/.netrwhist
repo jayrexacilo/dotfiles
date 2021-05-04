@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/kzn/.config/nvim'
+let g:netrw_dirhist_6='/home/kzn/.config'
+let g:netrw_dirhist_5='/home/kzn/programming/personal-projects/nodejs/mediaplayer/client/src/components/dashboard'
+let g:netrw_dirhist_4='/home/kzn/programming/personal-projects/nodejs/mediaplayer/client/src/components'
+let g:netrw_dirhist_3='/home/kzn/programming/personal-projects/nodejs/mediaplayer/client/src'
+let g:netrw_dirhist_2='/home/kzn/programming/personal-projects/nodejs/mediaplayer/client'
+let g:netrw_dirhist_1='/home/kzn/programming/personal-projects/nodejs/mediaplayer'
+let g:netrw_dirhist_0='/home/kzn/programming/personal-projects/nodejs/mediaplayer/server/src/routes/api'
+let g:netrw_dirhist_9='/home/kzn/programming/personal-projects/nodejs/mediaplayer/server/src/routes'
+let g:netrw_dirhist_8='/home/kzn/programming/personal-projects/nodejs/mediaplayer'
