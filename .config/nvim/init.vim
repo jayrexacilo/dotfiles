@@ -199,3 +199,6 @@ function! XTermPasteBegin()
   set paste
   return ""
 endfunction
+
+"curl
+command Exec set splitright | vnew | set filetype=sh | read !sh #
