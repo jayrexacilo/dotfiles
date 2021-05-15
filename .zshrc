@@ -35,3 +35,9 @@ antigen apply
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/kzn/.sdkman"
 [[ -s "/home/kzn/.sdkman/bin/sdkman-init.sh" ]] && source "/home/kzn/.sdkman/bin/sdkman-init.sh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/kzn/programming/xplus/gcloud/google-cloud-sdk/path.zsh.inc' ]; then . '/home/kzn/programming/xplus/gcloud/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/kzn/programming/xplus/gcloud/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/kzn/programming/xplus/gcloud/google-cloud-sdk/completion.zsh.inc'; fi
