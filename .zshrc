@@ -9,6 +9,9 @@ alias cdx='cd ~/programming/xplus/'
 alias cdxd='cd ~/programming/xplus/dipcwd'
 alias cdp='cd ~/programming/personal-projects'
 alias nv='nvim'
+alias td='transmission-daemon'
+alias ta='transmission-remote -a '
+alias tl='transmission-remote -l '
 
 export TERM=xterm-256color
 
