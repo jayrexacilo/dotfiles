@@ -108,7 +108,8 @@ set cursorline
 set smartcase
 
 " remap
-nnoremap , `
+"nnoremap , `
+let mapleader =","
 
 function GetSessionDir()
   let g:session_dir = '~/.vim-sessions'
