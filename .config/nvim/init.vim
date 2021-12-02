@@ -151,21 +151,21 @@ set wildmenu
 let g:netrw_liststyle=3
 
 " use spaces for tabs
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 "
 " " display indentation guides
 set list listchars=tab:❘\ ,trail:·,extends:»,precedes:«,nbsp:×
 "
 " " convert spaces to tabs when reading file
-autocmd! bufreadpost * set noexpandtab | retab! 4
+autocmd! bufreadpost * set noexpandtab | retab! 2
 "
 " " convert tabs to spaces before writing file
-autocmd! bufwritepre * set expandtab | retab! 4
+autocmd! bufwritepre * set expandtab | retab! 2
 
 " " convert spaces to tabs after writing file (to show guides again)
-autocmd! bufwritepost * set noexpandtab | retab! 4
+autocmd! bufwritepost * set noexpandtab | retab! 2
 
 let &t_SI .= "\<Esc>[?2004h"
 let &t_EI .= "\<Esc>[?2004l"
