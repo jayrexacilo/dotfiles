@@ -180,3 +180,4 @@ endfunction
 
 "curl
 command Exec set splitright | vnew | set filetype=sh | read !sh #
+
