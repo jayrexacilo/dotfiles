@@ -1,8 +1,8 @@
 if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
-  echo "Downloading junegunn/vim-plug to manage plugins..."
-  silent !mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/
-  silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim
-  autocmd VimEnter * PlugInstall
+	echo "Downloading junegunn/vim-plug to manage plugins..."
+	silent !mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/
+	silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim
+	autocmd VimEnter * PlugInstall
 endif
 
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
@@ -11,7 +11,7 @@ Plug 'bling/vim-airline'
 Plug 'tpope/vim-commentary'
 Plug 'ap/vim-css-color'
 Plug 'mattn/emmet-vim'
-Plug 'cormacrelf/vim-colors-github'
+Plug 'pbrisbin/vim-colors-off'
 Plug 'zivyangll/git-blame.vim'
 "Plug 'dense-analysis/ale'
 "Plug 'prettier/vim-prettier', { 'do': 'npm install' }
@@ -20,39 +20,40 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 set clipboard+=unnamedplus
 
 " Shortcutting split navigation, saving a keypress:
-  map <C-h> <C-w>h
-  map <C-j> <C-w>j
-  map <C-k> <C-w>k
-  map <C-l> <C-w>l
+	map <C-h> <C-w>h
+	map <C-j> <C-w>j
+	map <C-k> <C-w>k
+	map <C-l> <C-w>l
 
 " Ensure files are read as what I want:
-  let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-  map <leader>v :VimwikiIndex
-  let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
-  autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
-  autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
-  autocmd BufRead,BufNewFile *.tex set filetype=tex
+	let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+	map <leader>v :VimwikiIndex
+	let g:vimwiki_list = [{'path': '~/Documents/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
+	autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
+	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
+	autocmd BufRead,BufNewFile *.tex set filetype=tex
 
 " Save file as sudo on files that require root permission
-  cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+	cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
-  autocmd BufWritePre * %s/\s\+$//e
-  autocmd BufWritePre * %s/\n\+\%$//e
-  autocmd BufWritePre *.[ch] %s/\%$/\r/e
+	autocmd BufWritePre * %s/\s\+$//e
+	autocmd BufWritePre * %s/\n\+\%$//e
+	autocmd BufWritePre *.[ch] %s/\%$/\r/e
 
 " When shortcut files are updated, renew bash and ranger configs with new material:
-  autocmd BufWritePost bm-files,bm-dirs !shortcuts
+	autocmd BufWritePost bm-files,bm-dirs !shortcuts
 " Run xrdb whenever Xdefaults or Xresources are updated.
-  autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
-  autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
+	autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
+	autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
 " Recompile dwmblocks on config edit.
-  autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }
+	autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }
 
 " Turns off highlighting on the bits of code that are changed, so the line that is changed is highlighted but the actual text that has changed stands out on the line and is readable.
 if &diff
@@ -60,8 +61,8 @@ if &diff
 endif
 
 let g:coc_global_extensions = [
-  \ 'coc-tsserver'
-  \ ]
+	\ 'coc-tsserver'
+	\ ]
 
 try
 	nmap <silent> [c :call CocAction('diagnosticNext')<cr>
@@ -78,19 +79,16 @@ set t_Co=256
 set hlsearch
 
 if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
 endif
-" use a slightly darker background, like GitHub inline code blocks
-let g:github_colors_soft = 1
 
 " use the dark theme
 set background=dark
 
 " more blocky diff markers in signcolumn (e.g. GitGutter)
-let g:github_colors_block_diffmark = 0
-colorscheme github
+colorscheme off
 
 set laststatus=2
 set autoread
@@ -112,15 +110,15 @@ set smartcase
 let mapleader =","
 
 function GetSessionDir()
-  let g:session_dir = '~/.vim-sessions'
-  let g:proj_dir = split($PWD, '/')[-1]
-  if empty(glob(expand('~/.vim-sessions')))
+	let g:session_dir = '~/.vim-sessions'
+	let g:proj_dir = split($PWD, '/')[-1]
+	if empty(glob(expand('~/.vim-sessions')))
 	exec 'silent !mkdir '.g:session_dir.' > /dev/null 2>&1'
-  endif
-  if empty(glob(expand('~/.vim-sessions/'.g:proj_dir)))
+	endif
+	if empty(glob(expand('~/.vim-sessions/'.g:proj_dir)))
 	exec 'silent !mkdir '.g:session_dir.'/'.g:proj_dir.'> /dev/null 2>&1'
-  endif
-  return g:session_dir.'/'.g:proj_dir
+	endif
+	return g:session_dir.'/'.g:proj_dir
 endfunction
 
 exec 'nnoremap <leader>ss :mks! '. GetSessionDir() .'/*.vim<C-D><BS><BS><BS><BS><BS>'
@@ -175,9 +173,9 @@ let &t_EI .= "\<Esc>[?2004l"
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
+	set pastetoggle=<Esc>[201~
+	set paste
+	return ""
 endfunction
 
 "curl
