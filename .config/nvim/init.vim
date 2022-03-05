@@ -11,7 +11,12 @@ Plug 'bling/vim-airline'
 Plug 'tpope/vim-commentary'
 Plug 'ap/vim-css-color'
 Plug 'mattn/emmet-vim'
-Plug 'pbrisbin/vim-colors-off'
+"Plug 'pbrisbin/vim-colors-off'
+Plug 'sheerun/vim-polyglot'
+"Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
+Plug 'nanotech/jellybeans.vim'
+Plug 'gosukiwi/vim-atom-dark'
+Plug 'chriskempson/base16-vim'
 Plug 'zivyangll/git-blame.vim'
 "Plug 'dense-analysis/ale'
 "Plug 'prettier/vim-prettier', { 'do': 'npm install' }
@@ -88,7 +93,7 @@ endif
 set background=dark
 
 " more blocky diff markers in signcolumn (e.g. GitGutter)
-colorscheme off
+colorscheme base16-black-metal-mayhem
 
 set laststatus=2
 set autoread
@@ -180,4 +185,3 @@ endfunction
 
 "curl
 command Exec set splitright | vnew | set filetype=sh | read !sh #
-
