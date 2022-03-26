@@ -175,7 +175,7 @@ set shiftwidth=2
 set expandtab
 "
 " " display indentation guides
-set list listchars=tab:‚ùò\ ,trail:¬∑,extends:¬ª,precedes:¬´,nbsp:√ó
+set list listchars=tab:❘\ ,trail:·,extends:»,precedes:«,nbsp:×
 "
 " " convert spaces to tabs when reading file
 autocmd! bufreadpost * set noexpandtab | retab! 2
