@@ -26,7 +26,21 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'jremmen/vim-ripgrep'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call plug#end()
+
+autocmd ColorScheme * highlight CursorLineNr guifg=yellow
+autocmd ColorScheme * highlight LineNr guifg=white
+autocmd ColorScheme * highlight TabLineSel guifg=yellow
+autocmd ColorScheme * highlight TabLine guifg=white guibg=black
+
+let g:rg_command = 'rg --vimgrep -S'
+
+" fzf mappings
+nnoremap <Leader><Space> :Files<CR>
 
 set clipboard+=unnamedplus
 
@@ -148,7 +162,7 @@ set number relativenumber
 " Search down into subfolders
 " Provides tab-completion for all file-related tasks
 set path+=**
-set wildignore+=**/node_modules/**
+set wildignore+=**/bower_components/**,**/node_modules/**,**vendor/bundle**,.git,.git/**
 
 " Display all matching files when we tab complete
 set wildmenu
@@ -161,7 +175,7 @@ set shiftwidth=2
 set expandtab
 "
 " " display indentation guides
-set list listchars=tab:❘\ ,trail:·,extends:»,precedes:«,nbsp:×
+set list listchars=tab:‚ùò\ ,trail:¬∑,extends:¬ª,precedes:¬´,nbsp:√ó
 "
 " " convert spaces to tabs when reading file
 autocmd! bufreadpost * set noexpandtab | retab! 2
