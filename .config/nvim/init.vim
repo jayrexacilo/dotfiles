@@ -30,6 +30,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'jremmen/vim-ripgrep'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'mkitt/tabline.vim'
 call plug#end()
 
 autocmd ColorScheme * highlight CursorLineNr guifg=yellow
