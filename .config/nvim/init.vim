@@ -1,22 +1,22 @@
 if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
-  echo "Downloading junegunn/vim-plug to manage plugins..."
-  silent !mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/
-  silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim
-  autocmd VimEnter * PlugInstall
+	echo "Downloading junegunn/vim-plug to manage plugins..."
+	silent !mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/
+	silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim
+	autocmd VimEnter * PlugInstall
 endif
 
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
 Plug 'vimwiki/vimwiki'
 Plug 'bling/vim-airline'
-Plug 'tpope/vim-commentary'
 Plug 'ap/vim-css-color'
 Plug 'mattn/emmet-vim'
 "Plug 'pbrisbin/vim-colors-off'
 Plug 'sheerun/vim-polyglot'
-"Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
 Plug 'nanotech/jellybeans.vim'
 Plug 'gosukiwi/vim-atom-dark'
 Plug 'chriskempson/base16-vim'
+Plug 'mhartington/oceanic-next'
+Plug 'rafi/awesome-vim-colorschemes'
 Plug 'zivyangll/git-blame.vim'
 "Plug 'dense-analysis/ale'
 "Plug 'prettier/vim-prettier', { 'do': 'npm install' }
@@ -38,6 +38,15 @@ autocmd ColorScheme * highlight LineNr guifg=white
 autocmd ColorScheme * highlight TabLineSel guifg=yellow
 autocmd ColorScheme * highlight TabLine guifg=white guibg=black
 autocmd ColorScheme * highlight Comment guifg=#35A99E guibg=black
+autocmd ColorScheme * highlight Search guibg=white guifg=grey
+autocmd BufNewFile,BufRead * setlocal formatoptions-=ro
+
+
+autocmd BufWritePre *.c call TrimWhiteSpace()
+function! TrimWhiteSpace()
+	:$s/^\n/qfqlkwjfqlwkfjqlkwfjqlkwfjlqkwjflqkwjflqkwfj/e
+	:g/qfqlkwjfqlwkfjqlkwfjqlkwfjlqkwjflqkwjflqkwfj/d
+endfunction
 
 " fzf mappings
 nnoremap <expr> <C-x> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
@@ -48,50 +57,53 @@ let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 set clipboard+=unnamedplus
 
 " Shortcutting split navigation, saving a keypress:
-  map <C-h> <C-w>h
-  map <C-j> <C-w>j
-  map <C-k> <C-w>k
-  map <C-l> <C-w>l
+	map <C-h> <C-w>h
+	map <C-j> <C-w>j
+	map <C-k> <C-w>k
+	map <C-l> <C-w>l
 
 " Ensure files are read as what I want:
-  let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-  map <leader>v :VimwikiIndex
-  let g:vimwiki_list = [{'path': '~/Documents/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
-  autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
-  autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
-  autocmd BufRead,BufNewFile *.tex set filetype=tex
+	let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+	map <leader>v :VimwikiIndex
+	let g:vimwiki_list = [{'path': '~/Documents/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
+	autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
+	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
+	autocmd BufRead,BufNewFile *.tex set filetype=tex
 
 " Save file as sudo on files that require root permission
-  cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+	cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
-  autocmd BufWritePre * %s/\s\+$//e
-  autocmd BufWritePre * %s/\n\+\%$//e
-  autocmd BufWritePre *.[ch] %s/\%$/\r/e
+	autocmd BufWritePre * %s/\s\+$//e
+	autocmd BufWritePre * %s/\n\+\%$//e
+	autocmd BufWritePre *.[ch] %s/\%$/\r/e
 
 " When shortcut files are updated, renew bash and ranger configs with new material:
-  autocmd BufWritePost bm-files,bm-dirs !shortcuts
+" autocmd BufWritePost bm-files,bm-dirs !shortcuts
 " Run xrdb whenever Xdefaults or Xresources are updated.
-  autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
-  autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
+"autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
+"autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
 " Recompile dwmblocks on config edit.
-  autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }
+"autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }
 
 " Turns off highlighting on the bits of code that are changed, so the line that is changed is highlighted but the actual text that has changed stands out on the line and is readable.
 if &diff
-  highlight! link DiffText MatchParen
+	highlight! link DiffText MatchParen
 endif
 
 let g:coc_global_extensions = [
-  \ 'coc-tsserver'
-  \ ]
+ \ 'coc-tsserver',
+ \ 'coc-clangd'
+ \ ]
 
-try
-  nmap <silent> [c :call CocAction('diagnosticNext')<cr>
-  nmap <silent> ]c :call CocAction('diagnosticPrevious')<cr>
-endtry
+let b:coc_suggest_disable = 1
 
-nnoremap <silent> K :call CocAction('doHover')<CR>
+"try
+" nmap <silent> [c :call CocAction('diagnosticNext')<cr>
+" nmap <silent> ]c :call CocAction('diagnosticPrevious')<cr>
+"endtry
+
+"nnoremap <silent> K :call CocAction('doHover')<CR>
 
 "Highlighting for large files
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
@@ -101,16 +113,32 @@ set t_Co=256
 set hlsearch
 
 if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
 endif
+
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+syntax on
+set termguicolors
 
 " use the dark theme
 set background=dark
 
 " more blocky diff markers in signcolumn (e.g. GitGutter)
-colorscheme base16-black-metal-mayhem
+"colorscheme OceanicNext
+"colorscheme base16-atlas
+"colorscheme base16-black-metal-mayhem
+"colorscheme base16-grayscale-dark
+"colorscheme sunbather
+"colorscheme paramount
+"colorscheme 256_noir
+
+colorscheme base16-bright
 
 set laststatus=2
 set autoread
@@ -120,27 +148,31 @@ set mouse=a
 
 filetype plugin indent on
 set smartindent
-autocmd BufRead,BufWritePre *.sh normal gg=G
+"autocmd BufRead,BufWritePre *.sh normal gg=G
 
 set cursorcolumn
-set cursorline
+"set cursorline
 "set ignorecase
 set smartcase
 
 " remap
 "nnoremap , `
 let mapleader =","
+nnoremap <nowait> <Leader>q :q<CR>
+nnoremap <nowait> <Leader>s :w<CR>
+nnoremap <nowait> <Leader>t :tabe<CR>
+
 
 function GetSessionDir()
-  let g:session_dir = '~/.vim-sessions'
-  let g:proj_dir = split($PWD, '/')[-1]
-  if empty(glob(expand('~/.vim-sessions')))
-  exec 'silent !mkdir '.g:session_dir.' > /dev/null 2>&1'
-  endif
-  if empty(glob(expand('~/.vim-sessions/'.g:proj_dir)))
-  exec 'silent !mkdir '.g:session_dir.'/'.g:proj_dir.'> /dev/null 2>&1'
-  endif
-  return g:session_dir.'/'.g:proj_dir
+	let g:session_dir = '~/.vim-sessions'
+	let g:proj_dir = split($PWD, '/')[-1]
+	if empty(glob(expand('~/.vim-sessions')))
+	exec 'silent !mkdir '.g:session_dir.' > /dev/null 2>&1'
+	endif
+	if empty(glob(expand('~/.vim-sessions/'.g:proj_dir)))
+	exec 'silent !mkdir '.g:session_dir.'/'.g:proj_dir.'> /dev/null 2>&1'
+	endif
+	return g:session_dir.'/'.g:proj_dir
 endfunction
 
 exec 'nnoremap <leader>ss :mks! '. GetSessionDir() .'/*.vim<C-D><BS><BS><BS><BS><BS>'
@@ -148,6 +180,7 @@ exec 'nnoremap <leader>sr :so '. GetSessionDir() .'/*.vim<C-D><BS><BS><BS><BS><B
 
 nnoremap <Leader>bb :<C-u>call gitblame#echo()<CR>
 imap kj <Esc>
+xnoremap kj <Esc>
 
 let @t .= 'tabe | find '
 
@@ -155,8 +188,8 @@ let @t .= 'tabe | find '
 set nocompatible
 
 " enable syntax and plugins (for netrw)
-syntax enable
-filetype plugin on
+"syntax enable
+filetype plugin off
 set number relativenumber
 
 
@@ -195,9 +228,9 @@ let &t_EI .= "\<Esc>[?2004l"
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
+	set pastetoggle=<Esc>[201~
+	set paste
+	return ""
 endfunction
 
 "curl
