@@ -8,11 +8,24 @@ set hlsearch
 set ruler
 set background=dark
 set t_Co=256
+"colorscheme slate
+"colorscheme base16-atlas
+colorscheme OceanicNext
 
-highlight LineNr ctermfg=grey cterm=bold
+if exists('+termguicolors')
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
+endif
+
+autocmd ColorScheme * highlight CursorLineNr guifg=yellow
+autocmd ColorScheme * highlight LineNr guifg=white
+autocmd ColorScheme * highlight TabLineSel guifg=white guibg=black
+autocmd ColorScheme * highlight TabLine guifg=white guibg=black
+autocmd ColorScheme * highlight Comment guifg=#35A99E guibg=black
+autocmd ColorScheme * highlight Search guibg=white guifg=black
 autocmd BufNewFile,BufRead * setlocal formatoptions-=ro
 
-let g:netrw_liststyle=3
 
 set list listchars=tab:❘\ ,trail:·,extends:»,precedes:«,nbsp:× "display indentation guides
 autocmd! bufreadpost * set noexpandtab | retab! 2 "convert spaces to tabs when reading file
@@ -21,6 +34,7 @@ autocmd! bufwritepost * set noexpandtab | retab! 2 "convert spaces to tabs after
 
 imap kj <Esc>
 let mapleader =","
+let g:netrw_liststyle=3
 
 function GetSessionDir()
 	let g:session_dir = '~/.vim-sessions'
