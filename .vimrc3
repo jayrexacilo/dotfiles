@@ -1,0 +1,106 @@
+call plug#begin()
+Plug 'bignimbus/pop-punk.vim'
+Plug 'mkitt/tabline.vim'
+Plug 'mattn/emmet-vim'
+Plug 'zivyangll/git-blame.vim'
+call plug#end()
+
+command! MakeTags !ctags -R .
+
+set ttimeout
+set ttimeoutlen=100
+set timeoutlen=200
+
+set cindent
+set cursorline
+set cursorcolumn
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set ai
+set number relativenumber
+set hlsearch
+set ruler
+set background=dark
+set t_Co=256
+set mouse=n
+
+let mapleader =","
+let g:netrw_liststyle=3
+let @t .= 'tabe | find '
+
+syntax on
+filetype plugin indent on
+colorscheme pop-punk
+
+hi Normal guibg=NONE ctermbg=NONE
+hi CursorLine guibg=#0D1016 ctermbg=NONE
+hi CursorColumn guibg=#0D1016 ctermbg=NONE
+
+set list listchars=tab:❘\ ,trail:·,extends:»,precedes:«,nbsp:× "display indentation guides
+"set list listchars=tab: \ ,trail:·,extends:»,precedes:«,nbsp:× "display indentation guides
+autocmd! bufreadpost * set noexpandtab | retab! 2 "convert spaces to tabs when reading file
+autocmd! bufwritepre * set expandtab | retab! 2 "convert tabs to spaces before writing file
+autocmd! bufwritepost * set noexpandtab | retab! 2 "convert spaces to tabs after writing file (to show guides again)
+
+if exists('+termguicolors')
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
+endif
+
+
+imap kj <Esc>
+nnoremap <Leader>l :!lazygit<CR>
+nnoremap <C-h> :vertical resize -10<CR>
+nnoremap <C-l> :vertical resize +10<CR>
+nnoremap <C-j> :horizontal resize +10<CR>
+nnoremap <C-k> :horizontal resize -10<CR>
+nnoremap <C-k> :horizontal resize -10<CR>
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>qq :q!<CR>
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>ww :w!<CR>
+
+
+" FINDING FILES:
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
+set path+=**
+set wildignore+=**/bower_components/**,**/node_modules/**,**vendor/bundle**,.git,.git/**
+set wildmenu " Display all matching files when we tab complete
+
+" FINDING TEXT IN FILES:
+set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+set grepformat+=%f:%l:%c:%m
+nnoremap <Leader>g :silent lgrep<Space>""<left>
+"nnoremap <Leader><S-p> :lprevious<CR>
+"nnoremap <Leader><S-n> :lnext<CR>
+nnoremap <C-p> :lprevious<CR>
+nnoremap <C-n> :lnext<CR>
+nnoremap <Leader>o :lw<CR>
+
+nnoremap <Leader>bb :<C-u>call gitblame#echo()<CR>
+
+
+"""""""""""""" SESSION START
+function GetSessionDir()
+	let g:session_dir = '~/.vim-sessions'
+	let g:proj_dir = split($PWD, '/')[-1]
+	if empty(glob(expand('~/.vim-sessions')))
+	exec 'silent !mkdir '.g:session_dir.' > /dev/null 2>&1'
+	endif
+	if empty(glob(expand('~/.vim-sessions/'.g:proj_dir)))
+	exec 'silent !mkdir '.g:session_dir.'/'.g:proj_dir.'> /dev/null 2>&1'
+	endif
+	return g:session_dir.'/'.g:proj_dir
+endfunction
+
+exec 'nnoremap <leader>ss :mks! '. GetSessionDir() .'/*.vim<C-D><BS><BS><BS><BS><BS>'
+exec 'nnoremap <leader>sr :so '. GetSessionDir() .'/*.vim<C-D><BS><BS><BS><BS><BS>'
+
+"""""""""""""" SESSION END
+
+
+" Auto reload dwmblocks on update config.h
+autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
