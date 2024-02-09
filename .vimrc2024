@@ -1,0 +1,121 @@
+set directory=$HOME/.vim/tmp/
+command! MakeTags !ctags -R .
+
+call plug#begin()
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'mattn/emmet-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#end()
+
+syntax on
+filetype plugin indent on
+colorscheme  industry
+
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set ai
+set number relativenumber
+set hlsearch
+set ruler
+set background=dark
+set t_Co=256
+set novisualbell
+set noerrorbells
+set belloff=all
+
+" No temporary files
+set noundofile
+set noswapfile
+set nobackup
+
+" FINDING FILES:
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
+set path+=**
+set wildignore+=**/bower_components/**,**/node_modules/**,**vendor/bundle**,.git,.git/**
+set wildmenu " Display all matching files when we tab complete
+set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+set grepformat+=%f:%l:%c:%m
+set wildmode=longest,list,full " Enable autocompletion:
+
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " Disables automatic commenting on newline:
+
+
+let mapleader =","
+let g:netrw_liststyle=3
+imap kj <Esc>
+""imap <C-Y> <C-N><C-P>
+noremap pumvisible() ? "\" : " "
+
+
+nnoremap <Leader>g :silent lgrep<Space>
+nnoremap <silent> [f :lprevious<CR>
+nnoremap <silent> ]f :lnext<CR>
+nnoremap <Leader>l :!lazygit<CR>
+nnoremap <silent> <C-n> :bn<CR>
+nnoremap <silent> <C-p> :bp<CR>
+nnoremap <silent> <C-c> :bd<CR>
+
+
+function GetSessionDir()
+	let g:session_dir = '$HOME/.vim-sessions'
+	let g:proj_dir = split(getcwd(), '/')[-1]
+	if empty(glob(expand('$HOME/.vim-sessions')))
+	exec 'silent !mkdir '.g:session_dir.' > /dev/null 2>&1'
+	endif
+	if empty(glob(expand('$HOME/.vim-sessions/'.g:proj_dir)))
+	exec 'silent !mkdir '.g:session_dir.'/'.g:proj_dir.'> /dev/null 2>&1'
+	endif
+	return g:session_dir.'/'.g:proj_dir
+endfunction
+
+exec 'nnoremap <leader>ss :mks! '. GetSessionDir() .'/*.vim<C-D><BS><BS><BS><BS><BS>'
+exec 'nnoremap <leader>sr :so '. GetSessionDir() .'/*.vim<C-D><BS><BS><BS><BS><BS>'
+
+
+""""""""""""""""""""" FZF Start
+" FZF Config
+nnoremap <C-x> :Files<cr>
+nnoremap <C-b> :b<Space>
+nnoremap <C-g> :RG<cr>
+
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
+let g:fzf_preview_window = ''
+
+" Get text in files with Rg
+command! -bang -nargs=* Rg
+ \ call fzf#vim#grep(
+ \		'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+ \		fzf#vim#with_preview(), <bang>0)
+
+" Ripgrep advanced
+function! RipgrepFzf(query, fullscreen)
+ let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+ let initial_command = printf(command_fmt, shellescape(a:query))
+ let reload_command = printf(command_fmt, '{q}')
+ let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+ call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+
+function RgFzF()
+ command! -bang -nargs=* Rg
+		\ call fzf#vim#grep(
+		\		'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+		\		fzf#vim#with_preview(), <bang>0)
+endfunction
+"autocmd UIEnter * :call RgFzF()
+
+" fzf mappings
+"nnoremap <expr> <C-x> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
+"nnoremap <C-Space> :Rg<CR>
+"let g:rg_command = 'rg --vimgrep -S'
+"let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+
+""""""""""""""""""""" FZF END
+
+command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+nnoremap gp :silent %!prettier --stdin-filepath %<CR>
