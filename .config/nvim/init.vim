@@ -1,237 +1,109 @@
-if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
-	echo "Downloading junegunn/vim-plug to manage plugins..."
-	silent !mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/
-	silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim
-	autocmd VimEnter * PlugInstall
-endif
-
-call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
-Plug 'vimwiki/vimwiki'
-Plug 'bling/vim-airline'
-Plug 'ap/vim-css-color'
-Plug 'mattn/emmet-vim'
-"Plug 'pbrisbin/vim-colors-off'
-Plug 'sheerun/vim-polyglot'
-Plug 'nanotech/jellybeans.vim'
-Plug 'gosukiwi/vim-atom-dark'
-Plug 'chriskempson/base16-vim'
-Plug 'mhartington/oceanic-next'
-Plug 'rafi/awesome-vim-colorschemes'
-Plug 'zivyangll/git-blame.vim'
-"Plug 'dense-analysis/ale'
-"Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'vim-airline/vim-airline'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'jremmen/vim-ripgrep'
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'mkitt/tabline.vim'
+" I use this FZF plugin to swap between buffers & files heavily
+call plug#begin('~/.vim/plugged')
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
+  Plug 'tek256/simple-dark'
+  Plug 'mattn/emmet-vim'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'kdheepak/lazygit.nvim'
+  Plug 'psliwka/vim-smoothie'
+  Plug 'tpope/vim-fugitive'
+  Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
+  Plug 'mkitt/tabline.vim'
+  "Plug 'ap/vim-css-color'
 call plug#end()
 
-autocmd ColorScheme * highlight CursorLineNr guifg=yellow
-autocmd ColorScheme * highlight LineNr guifg=white
-autocmd ColorScheme * highlight TabLineSel guifg=yellow
-autocmd ColorScheme * highlight TabLine guifg=white guibg=black
-autocmd ColorScheme * highlight Comment guifg=#35A99E guibg=black
-autocmd ColorScheme * highlight Search guibg=white guifg=grey
-autocmd BufNewFile,BufRead * setlocal formatoptions-=ro
 
-
-autocmd BufWritePre *.c call TrimWhiteSpace()
-function! TrimWhiteSpace()
-	:$s/^\n/qfqlkwjfqlwkfjqlkwfjqlkwfjlqkwjflqkwjflqkwfj/e
-	:g/qfqlkwjfqlwkfjqlkwfjqlkwfjlqkwjflqkwjflqkwfj/d
-endfunction
-
-" fzf mappings
-nnoremap <expr> <C-x> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
-let g:rg_command = 'rg --vimgrep -S'
-let g:fzf_commands_expect = 'alt-enter,ctrl-x'
-
-
-set clipboard+=unnamedplus
-
-" Shortcutting split navigation, saving a keypress:
-	map <C-h> <C-w>h
-	map <C-j> <C-w>j
-	map <C-k> <C-w>k
-	map <C-l> <C-w>l
-
-" Ensure files are read as what I want:
-	let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-	map <leader>v :VimwikiIndex
-	let g:vimwiki_list = [{'path': '~/Documents/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
-	autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
-	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
-	autocmd BufRead,BufNewFile *.tex set filetype=tex
-
-" Save file as sudo on files that require root permission
-	cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
-
-" Automatically deletes all trailing whitespace and newlines at end of file on save.
-	autocmd BufWritePre * %s/\s\+$//e
-	autocmd BufWritePre * %s/\n\+\%$//e
-	autocmd BufWritePre *.[ch] %s/\%$/\r/e
-
-" When shortcut files are updated, renew bash and ranger configs with new material:
-" autocmd BufWritePost bm-files,bm-dirs !shortcuts
-" Run xrdb whenever Xdefaults or Xresources are updated.
-"autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
-"autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
-" Recompile dwmblocks on config edit.
-"autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid -f dwmblocks }
-
-" Turns off highlighting on the bits of code that are changed, so the line that is changed is highlighted but the actual text that has changed stands out on the line and is readable.
-if &diff
-	highlight! link DiffText MatchParen
-endif
-
-let g:coc_global_extensions = [
- \ 'coc-tsserver',
- \ 'coc-clangd'
- \ ]
-
-let b:coc_suggest_disable = 1
-
-"try
-" nmap <silent> [c :call CocAction('diagnosticNext')<cr>
-" nmap <silent> ]c :call CocAction('diagnosticPrevious')<cr>
-"endtry
-
-"nnoremap <silent> K :call CocAction('doHover')<CR>
-
-"Highlighting for large files
-autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
-
-set t_Co=256
-set hlsearch
-
-if exists('+termguicolors')
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-	set termguicolors
-endif
-
-if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-
-syntax on
-set termguicolors
-
-" use the dark theme
-set background=dark
-
-" more blocky diff markers in signcolumn (e.g. GitGutter)
-"colorscheme OceanicNext
-"colorscheme base16-atlas
-"colorscheme base16-black-metal-mayhem
-"colorscheme base16-grayscale-dark
-"colorscheme sunbather
-"colorscheme paramount
-"colorscheme 256_noir
-
-colorscheme base16-bright
-
-set laststatus=2
-set autoread
-set autoindent
-set nowrap
+set clipboard=unnamedplus
+set ttimeout
+set ttimeoutlen=100
+set timeoutlen=200
+" General configurations
+"set ttymouse=sgr
 set mouse=a
-
-filetype plugin indent on
-set smartindent
-"autocmd BufRead,BufWritePre *.sh normal gg=G
-
-set cursorcolumn
-"set cursorline
-"set ignorecase
-set smartcase
-
-" remap
-"nnoremap , `
-let mapleader =","
-nnoremap <nowait> <Leader>q :q<CR>
-nnoremap <nowait> <Leader>s :w<CR>
-nnoremap <nowait> <Leader>t :tabe<CR>
-
-
-function GetSessionDir()
-	let g:session_dir = '~/.vim-sessions'
-	let g:proj_dir = split($PWD, '/')[-1]
-	if empty(glob(expand('~/.vim-sessions')))
-	exec 'silent !mkdir '.g:session_dir.' > /dev/null 2>&1'
-	endif
-	if empty(glob(expand('~/.vim-sessions/'.g:proj_dir)))
-	exec 'silent !mkdir '.g:session_dir.'/'.g:proj_dir.'> /dev/null 2>&1'
-	endif
-	return g:session_dir.'/'.g:proj_dir
-endfunction
-
-exec 'nnoremap <leader>ss :mks! '. GetSessionDir() .'/*.vim<C-D><BS><BS><BS><BS><BS>'
-exec 'nnoremap <leader>sr :so '. GetSessionDir() .'/*.vim<C-D><BS><BS><BS><BS><BS>'
-
-nnoremap <Leader>bb :<C-u>call gitblame#echo()<CR>
-imap kj <Esc>
-xnoremap kj <Esc>
-
-let @t .= 'tabe | find '
-
-" enter the current millenium
-set nocompatible
-
-" enable syntax and plugins (for netrw)
-"syntax enable
-filetype plugin off
+set backspace=indent,eol,start
+"set scrolloff=30
 set number relativenumber
-
-
-" FINDING FILES:
-
-" Search down into subfolders
-" Provides tab-completion for all file-related tasks
-set path+=**
-set wildignore+=**/bower_components/**,**/node_modules/**,**vendor/bundle**,.git,.git/**
-
-" Display all matching files when we tab complete
-set wildmenu
-
-let g:netrw_liststyle=3
-
-" use spaces for tabs
 set tabstop=2
 set shiftwidth=2
 set expandtab
-"
-" " display indentation guides
-set list listchars=tab:❘\ ,trail:·,extends:»,precedes:«,nbsp:×
-"
-" " convert spaces to tabs when reading file
-autocmd! bufreadpost * set noexpandtab | retab! 2
-"
-" " convert tabs to spaces before writing file
-autocmd! bufwritepre * set expandtab | retab! 2
+set showmatch
+set autoindent
+" No temporary files
+set noundofile
+set noswapfile
+set nobackup
+" Visual apperance
+set shortmess+=I
+"set statusline=%F
+set stl=%{expand('%:~:.')}
+set laststatus=2
+set showtabline=2
+set background=dark
+set hlsearch
+set guifont=Hack:h12
+let g:neovide_scale_factor = 0.6
+let g:neovide_transparency = 0.9
+colorscheme habamax
+hi Search cterm=reverse ctermfg=White ctermbg=Black
 
-" " convert spaces to tabs after writing file (to show guides again)
-autocmd! bufwritepost * set noexpandtab | retab! 2
 
-let &t_SI .= "\<Esc>[?2004h"
-let &t_EI .= "\<Esc>[?2004l"
 
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+let mapleader =","
+let g:netrw_liststyle=3
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
+let g:fzf_preview_window = ''
 
-function! XTermPasteBegin()
-	set pastetoggle=<Esc>[201~
-	set paste
-	return ""
-endfunction
+function! LineNumberToggle()
+  set nonumber norelativenumber!
+endfunc
 
-"curl
-command Exec set splitright | vnew | set filetype=sh | read !sh #
+imap kj <Esc>
+"nnoremap <Leader>l :!lazygit<CR>
+nnoremap <silent> <leader>l :LazyGit<CR>
+nnoremap <C-l> :call LineNumberToggle()<CR>
+nnoremap <leader>n <cmd>CHADopen<cr>
+
+" FZF Config
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=default', '--info=inline']}, <bang>0)
+let g:fzf_layout = { 'down': '~20%' }
+
+nnoremap <C-x> :Files<cr>
+nnoremap <Space> :Buffers<cr>
+nnoremap <C-f> :Rg<cr>
+
+nnoremap <C-n> :bn<cr>
+nnoremap <C-p> :bp<cr>
+
+nnoremap gp :silent %!prettier --stdin-filepath %<CR>
+
+nnoremap <C-k> :m-2<CR>
+nnoremap <C-j> :m+<CR>
+inoremap <C-k> <Esc>:m-2<CR>
+inoremap <C-j> <Esc>:m+<CR>
+
+" Move .viminfo file to ~/.vim/cache/.viminfo
+if &compatible | set nocompatible | endif
+set viminfo=%,<800,'10,/50,:100,h,f0,n~/.vim/cache/.viminfo
+
+command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+
+" disable auto comment on next line
+autocmd FileType * set formatoptions-=cro
+
+" AUTO CREATE DIRECTORY IF DOES NOT EXIST
+augroup vimrc-auto-mkdir
+ autocmd!
+ autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
+ function! s:auto_mkdir(dir, force)
+    if !isdirectory(a:dir)
+          \   && (a:force
+          \       || input("'" . a:dir . "' does not exist. Create? [y/N]") =~? '^y\%[es]$')
+      call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
+    endif
+ endfunction
+augroup END
+
+" auto reload dwmblocks on change config.h
+"autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
