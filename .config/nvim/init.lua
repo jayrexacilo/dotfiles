@@ -7,55 +7,76 @@ vim.api.nvim_set_keymap("i", "<CR>", "pumvisible() ? coc#_select_confirm() : \"\
 -- Plugins using Packer
 require('packer').startup(function(use)
   use 'ibhagwan/fzf-lua'                   -- FZF Alternative
-  use 'tek256/simple-dark'                  -- Theme
   use 'rebelot/kanagawa.nvim'               -- Kanagawa theme
   use 'kdheepak/lazygit.nvim'               -- Git integration
   use 'psliwka/vim-smoothie'                -- Smooth scrolling
   use 'tpope/vim-fugitive'                  -- Git wrapper
   use { 'ms-jpq/chadtree', branch = 'chad', run = 'python3 -m chadtree deps' } -- File explorer
-  use 'mkitt/tabline.vim'                   -- Tabline
+  use 'neoclide/coc.nvim'                   -- Autocomplete & LSP
   use 'vimwiki/vimwiki'                     -- Vimwiki
   use 'lumiliet/vim-twig'                   -- Twig support
+  use 'peitalin/vim-jsx-typescript'         -- JSX/TSX support
+  use 'pangloss/vim-javascript'             -- JavaScript support
+  use 'leafgarland/typescript-vim'          -- TypeScript support
+  use 'jparise/vim-graphql'                 -- GraphQL syntax support
+  use 'jwalton512/vim-blade'                -- Laravel Blade syntax
+  use 'mfussenegger/nvim-dap'               -- Debugging Adapter Protocol
 end)
 
 -- General settings
 vim.o.clipboard = "unnamedplus"
-vim.o.ttimeout = true
-vim.o.ttimeoutlen = 100
-vim.o.timeoutlen = 200
 vim.o.mouse = "a"
-vim.o.backspace = "indent,eol,start"
-vim.o.scrolloff = 20
+vim.o.scrolloff = 10
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.expandtab = true
-vim.o.showmatch = true
 vim.o.autoindent = true
-
--- Disable backup files
-vim.o.undofile = false
-vim.o.swapfile = false
-vim.o.backup = false
-
--- Appearance
-vim.o.shortmess = vim.o.shortmess .. "I"
-vim.o.laststatus = 2
-vim.o.showtabline = 2
-vim.o.hlsearch = true
 vim.o.background = "dark"
-vim.cmd("colorscheme kanagawa-dragon")
-vim.cmd("set stl=%{expand('%:~:.')}")
+vim.cmd("colorscheme kanagawa-wave")
 
 -- Neovide settings (if using)
 vim.g.neovide_scale_factor = 0.6
 vim.g.neovide_transparency = 0.9
+vim.o.guifont = "Inconsolata,monospace,Hack:h15"
+vim.g.neovide_disable_ligatures = true
 
--- PHP tab width
+vim.api.nvim_set_keymap('n', '<C-S-v>', '"+p', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-S-v>', '<C-r>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-S-v>', '"+p', { noremap = true, silent = true })
+vim.g.neovide_input_use_logo = true
+
+-- Function to open fzf-lua and paste clipboard content
+local function fzf_paste_command(cmd)
+  local clipboard = vim.fn.getreg("+") -- Get system clipboard content
+
+  -- Open fzf-lua
+  require("fzf-lua")[cmd]()
+
+  -- Wait a bit and then insert clipboard content
+  vim.schedule(function()
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(clipboard, true, false, true), "i", true)
+  end)
+end
+
+-- Set the function globally to prevent "nil" error
+_G.fzf_paste_command = fzf_paste_command
+
+-- Keybindings for opening fzf and auto-pasting clipboard
+vim.api.nvim_set_keymap("n", "<C-S-x>", "<cmd>lua _G.fzf_paste_command('files')<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-S-f>", "<cmd>lua _G.fzf_paste_command('live_grep')<CR>", { noremap = true, silent = true })
+
+-- PHP settings
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "php",
   command = "setlocal tabstop=4 shiftwidth=4 expandtab"
+})
+
+-- Laravel Blade support
+vim.api.nvim_create_autocmd("BufRead", {
+  pattern = "*.blade.php",
+  command = "set filetype=blade"
 })
 
 -- Twig filetype detection
@@ -64,8 +85,11 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
   command = "set filetype=twig"
 })
 
--- File explorer (CHADTree)
-vim.api.nvim_set_keymap("n", "<leader>n", ":CHADopen<CR>", { noremap = true, silent = true })
+-- React & Node.js settings
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
+  command = "setlocal tabstop=2 shiftwidth=2 expandtab"
+})
 
 -- FZF-Lua Configuration
 require('fzf-lua').setup({
@@ -85,6 +109,22 @@ require('fzf-lua').setup({
     silent = true,
   }
 })
+
+-- LSP Setup (Coc Extensions)
+vim.g.coc_global_extensions = {
+  'coc-json',
+  'coc-tsserver',
+  'coc-html',
+  'coc-css',
+  'coc-phpls',
+  'coc-vetur',
+  'coc-emmet',
+  'coc-eslint',
+  'coc-prettier'
+}
+
+-- CHADTree Toggle
+vim.api.nvim_set_keymap("n", "<leader>n", ":CHADopen<CR>", { noremap = true, silent = true })
 
 -- LazyGit mapping
 vim.api.nvim_set_keymap("n", "<leader>l", ":LazyGit<CR>", { noremap = true, silent = true })
@@ -122,24 +162,8 @@ vim.api.nvim_set_keymap("n", "<C-j>", ":m+<CR>", { noremap = true, silent = true
 vim.api.nvim_set_keymap("i", "<C-k>", "<Esc>:m-2<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<C-j>", "<Esc>:m+<CR>", { noremap = true, silent = true })
 
--- Prettier command
-vim.cmd([[ command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile') ]])
-
 -- Disable auto comment on next line
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
   command = "set formatoptions-=cro"
-})
-
--- Auto-create directories if they don't exist
-vim.api.nvim_create_augroup("vimrc-auto-mkdir", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = "vimrc-auto-mkdir",
-  pattern = "*",
-  callback = function()
-    local dir = vim.fn.expand("<afile>:p:h")
-    if not vim.fn.isdirectory(dir) then
-      vim.fn.mkdir(dir, "p")
-    end
-  end
 })
