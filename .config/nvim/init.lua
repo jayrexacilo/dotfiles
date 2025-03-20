@@ -34,18 +34,22 @@ vim.o.shiftwidth = 2
 vim.o.expandtab = true
 vim.o.autoindent = true
 vim.o.background = "dark"
-vim.cmd("colorscheme kanagawa-wave")
+vim.o.guifont = "Inconsolata,monospace,Hack:h15"
+-- vim.cmd("colorscheme kanagawa-wave")
+-- vim.cmd("colorscheme koehler")
+vim.cmd("colorscheme industry")
 
 -- Neovide settings (if using)
 vim.g.neovide_scale_factor = 0.6
-vim.g.neovide_transparency = 0.9
-vim.o.guifont = "Inconsolata,monospace,Hack:h15"
+vim.g.neovide_transparency = 0.8
+vim.g.neovide_background_color = "#000000"
+vim.g.neovide_refresh_rate = 60
 vim.g.neovide_disable_ligatures = true
+vim.g.neovide_input_use_logo = true
 
 vim.api.nvim_set_keymap('n', '<C-S-v>', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<C-S-v>', '<C-r>+', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<C-S-v>', '"+p', { noremap = true, silent = true })
-vim.g.neovide_input_use_logo = true
 
 -- Function to open fzf-lua and paste clipboard content
 local function fzf_paste_command(cmd)
@@ -101,11 +105,16 @@ require('fzf-lua').setup({
     border = "rounded",
     preview = {
       layout = "horizontal",
-      horizontal = "right:70%"
+      horizontal = "right:70%",
+      wrap = "nowrap",  -- Prevents text wrapping in preview
+      hidden = "nohidden", -- Ensures preview stays visible
     },
   },
+  files = {
+    fd_opts = "--type f --hidden --exclude .git --exclude node_modules",
+  },
   grep = {
-    rg_opts = "--fixed-strings --ignore-case --hidden",
+    rg_opts = "--fixed-strings --ignore-case --hidden --glob '!.git/*' --glob '!node_modules/*'",
     silent = true,
   }
 })
@@ -149,7 +158,7 @@ vim.api.nvim_set_keymap("n", "<C-p>", ":bp<CR>", { noremap = true, silent = true
 -- FZF Keybindings
 vim.api.nvim_set_keymap("n", "<C-x>", ":FzfLua files<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Space>", ":FzfLua buffers<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-f>", ":FzfLua live_grep_resume<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-f>", ":FzfLua live_grep<CR>", { noremap = true, silent = true })
 
 -- Save file shortcuts
 vim.api.nvim_set_keymap("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
@@ -166,4 +175,21 @@ vim.api.nvim_set_keymap("i", "<C-j>", "<Esc>:m+<CR>", { noremap = true, silent =
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
   command = "set formatoptions-=cro"
+})
+
+-- Auto-create directory if it does not exist before saving a file
+vim.api.nvim_create_augroup("vimrc_auto_mkdir", { clear = true })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = "vimrc_auto_mkdir",
+  pattern = "*",
+  callback = function()
+    local dir = vim.fn.expand("<afile>:p:h")
+    if vim.fn.isdirectory(dir) == 0 then
+      local choice = vim.fn.input("'" .. dir .. "' does not exist. Create? [y/N] ")
+      if choice:match("^y") then
+        vim.fn.mkdir(dir, "p")
+      end
+    end
+  end
 })
